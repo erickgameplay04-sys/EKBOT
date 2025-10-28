@@ -1,8 +1,18 @@
 const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
+// Criação do cliente com intents necessárias para detectar mensagens
+const client = new Client({ 
+  intents: [
+    GatewayIntentBits.Guilds, 
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent // necessário para comandos de texto
+  ] 
+});
+
+// Lista de inscritos
 let inscritos = [];
 
+// Personalize aqui
 const titulo = "🏆 Campeonato de Clash Royale";
 const premio = "R$10";
 const taxa = "R$2";
@@ -29,6 +39,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on('messageCreate', async message => {
+  // Checa se a mensagem é o comando
   if (message.content === "!campeonato") {
     const embed = new EmbedBuilder()
       .setTitle(titulo)
@@ -51,4 +62,5 @@ client.on('messageCreate', async message => {
   }
 });
 
+// Login usando variável de ambiente
 client.login(process.env.TOKEN);
